@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="pa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RANA Printing & Online Works | Nawanshahr</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts (Inter & Noto Sans Gurmukhi) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Gurmukhi:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#b91c1c',     /* Deep rich red matching branding */
+                            darkred: '#880e4f',
+                            gold: '#d97706',    /* Gold accent */
+                            goldlight: '#fef3c7',
+                            dark: '#0f172a',
+                            light: '#f8fafc'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans Gurmukhi', 'sans-serif'],
+                        gurmukhi: ['Noto Sans Gurmukhi', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans Gurmukhi', sans-serif;
+            background-color: #f8fafc;
+        }
+        .page-section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .page-section.active {
+            display: block;
+            opacity: 1;
+        }
+        .bg-pattern {
+            background-color: #991b1b;
+            background-image: radial-gradient(#d97706 0.75px, transparent 0.75px), radial-gradient(#d97706 0.75px, #991b1b 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0,15px 15px;
+        }
+        .card-hover {
+            transition: all 0.25s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -10px rgba(185, 28, 28, 0.15);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #b91c1c;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="text-slate-800 flex flex-col min-h-screen">
+
+    <!-- Top Announcement / Quick Contact Bar -->
+    <div class="bg-slate-900 text-slate-200 text-xs sm:text-sm py-2 px-4 border-b border-amber-600/30">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2">
+            <div class="flex items-center gap-4 flex-wrap justify-center">
+                <span class="flex items-center gap-1.5 text-amber-400 font-medium">
+                    <i class="fa-solid fa-location-dot"></i> Nawanshahr, Punjab
+                </span>
+                <span class="hidden md:inline text-slate-600">|</span>
+                <span class="flex items-center gap-1.5">
+                    <i class="fa-solid fa-clock text-amber-400"></i> Mon - Sat: 9:00 AM - 7:30 PM
+                </span>
+            </div>
+            <div class="flex items-center gap-4 font-semibold">
+                <a href="tel:9056080540" class="hover:text-amber-400 transition flex items-center gap-1">
+                    <i class="fa-solid fa-phone text-xs"></i> 62821-24896
+                </a>
+                <a href="tel:9888680022" class="hover:text-amber-400 transition flex items-center gap-1">
+                    <i class="fa-solid fa-phone text-xs"></i> 98886-80022
+                </a>
+             
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <header class="bg-white shadow-md sticky top-0 z-40 border-b-2 border-brand-red">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo & Brand Name -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
+                    <div class="w-12 h-12 rounded-xl bg-brand-red text-amber-400 flex items-center justify-center font-black text-2xl shadow-md border-2 border-amber-400">
+                        R
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xl sm:text-2xl font-black text-brand-red tracking-tight leading-none">RANA</span>
+                            <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded border border-amber-300">TRUSTED</span>
+                        </div>
+                        <p class="text-xs sm:text-sm font-bold text-slate-700 tracking-wide mt-0.5">Printing & Online Works</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                    <button onclick="navigateTo('home')" id="nav-home" class="nav-btn px-4 py-2 rounded-lg text-sm font-bold transition-all text-brand-red bg-red-50">
+                        <i class="fa-solid fa-house mr-1.5"></i>Home
+                    </button>
+                    <button onclick="navigateTo('services')" id="nav-services" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-brand-red hover:bg-red-50 transition-all">
+                        <i class="fa-solid fa-list-check mr-1.5"></i>Services / ਸੇਵਾਵਾਂ
+                    </button>
+                    <button onclick="navigateTo('about')" id="nav-about" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-brand-red hover:bg-red-50 transition-all">
+                        <i class="fa-solid fa-circle-info mr-1.5"></i>About Us
+                    </button>
+                    <button onclick="navigateTo('contact')" id="nav-contact" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-brand-red hover:bg-red-50 transition-all">
+                        <i class="fa-solid fa-address-book mr-1.5"></i>Contact Us
+                    </button>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center gap-2">
+                    <a href="tel:9056080540" class="p-2 bg-red-100 text-brand-red rounded-lg font-bold text-sm">
+                        <i class="fa-solid fa-phone"></i>
+                    </a>
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="p-2 rounded-lg text-slate-700 hover:text-brand-red focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 text-white border-b border-amber-500/30 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="navigateTo('home'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md font-semibold hover:bg-brand-red">
+                <i class="fa-solid fa-house mr-2 text-amber-400"></i>Home
+            </button>
+            <button onclick="navigateTo('services'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md font-semibold hover:bg-brand-red">
+                <i class="fa-solid fa-list-check mr-2 text-amber-400"></i>Services (ਸੇਵਾਵਾਂ)
+            </button>
+            <button onclick="navigateTo('about'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md font-semibold hover:bg-brand-red">
+                <i class="fa-solid fa-circle-info mr-2 text-amber-400"></i>About Us
+            </button>
+            <button onclick="navigateTo('contact'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md font-semibold hover:bg-brand-red">
+                <i class="fa-solid fa-address-book mr-2 text-amber-400"></i>Contact Us
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow">
+
+        <!-- ================= HOME SECTION ================= -->
+        <section id="page-home" class="page-section active">
+            <!-- Hero Banner -->
+            <div class="bg-pattern text-white relative overflow-hidden py-12 lg:py-20 px-4 sm:px-6">
+                <div class="max-w-7xl mx-auto grid md:grid-cols-12 gap-8 items-center relative z-10">
+                    <div class="md:col-span-7 space-y-6">
+                        <div class="inline-flex items-center gap-2 bg-amber-400 text-slate-950 px-3 py-1 rounded-full text-xs sm:text-sm font-extrabold shadow">
+                            <i class="fa-solid fa-award"></i> #1 Government & Digital Printing Hub in Nawanshahr
+                        </div>
+                        <h1 class="text-3xl sm:text-5xl font-black leading-tight tracking-tight">
+                            RANA <span class="text-amber-400">Printing & Online Works</span>
+                        </h1>
+                        <p class="text-lg sm:text-xl text-slate-100 font-medium font-gurmukhi">
+                            ਤੁਹਾਡੀਆਂ ਸਾਰੀਆਂ ਆਨਲਾਈਨ ਸਰਕਾਰੀ ਸੇਵਾਵਾਂ, ਪਾਸਪੋਰਟ, ਲੈਮੀਨੇਸ਼ਨ ਅਤੇ ਕਸਟਮ ਪ੍ਰਿੰਟਿੰਗ ਲਈ ਨਵਾਸ਼ਹਿਰ ਦਾ ਭਰੋਸੇਯੋਗ ਕੇਂਦਰ।
+                        </p>
+                        <p class="text-sm text-slate-200">
+                            Fast, reliable passport forms, Ayushman cards, PAN/Aadhaar updates, photos, mug/t-shirt printing & ITR filings across 2 convenient branches in Nawanshahr.
+                        </p>
+                        
+                        <!-- CTA Buttons -->
+                        <div class="flex flex-wrap gap-3 pt-2">
+                            <a href="tel:9888680022" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold px-5 py-3 rounded-xl shadow-lg transition flex items-center gap-2">
+                                <i class="fa-solid fa-phone-volume text-lg"></i> Call Now: 98886-80022
+                            </a>
+                            <a href="https://wa.me/919888680022?text=Hello%20RANA%20Printing,%20I%20have%20an%20inquiry" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-3 rounded-xl shadow-lg transition flex items-center gap-2">
+                                <i class="fa-brands fa-whatsapp text-xl"></i> WhatsApp Us
+                            </a>
+                            <button onclick="navigateTo('services')" class="bg-white/10 hover:bg-white/20 text-white font-semibold px-5 py-3 rounded-xl backdrop-blur border border-white/30 transition">
+                                View All Services &rarr;
+                            </button>
+                        </div>
+
+                        <!-- Chamber Locations Pills -->
+                        <div class="pt-4 border-t border-red-700/60 flex flex-wrap gap-2 text-xs sm:text-sm text-amber-200 font-medium">
+                            <span class="bg-slate-900/60 px-3 py-1.5 rounded-lg border border-amber-500/30">
+                                <i class="fa-solid fa-building text-amber-400 mr-1"></i> Branch : Chamber 05 & 06, DC Complex, Kacheria
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Hero Visual / Cards Badge -->
+                    <div class="md:col-span-5 bg-white text-slate-900 p-6 rounded-2xl shadow-2xl border-4 border-amber-400">
+                        <div class="text-center border-b pb-4 mb-4">
+                            <h3 class="text-xl font-black text-brand-red">ਸਾਡੀਆਂ ਪ੍ਰਮੁੱਖ ਸੇਵਾਵਾਂ</h3>
+                            <p class="text-xs text-slate-500">Popular Services & Solutions</p>
+                        </div>
+                        <ul class="space-y-3 font-semibold text-sm">
+                            <li class="flex items-center gap-3 p-2 bg-red-50 rounded-lg text-brand-red">
+                                <i class="fa-solid fa-passport text-lg"></i>
+                                <span>ਪਾਸਪੋਰਟ, ਆਧਾਰ & ਪੈਨ ਕਾਰਡ ਆਨਲਾਈਨ</span>
+                            </li>
+                            <li class="flex items-center gap-3 p-2 bg-amber-50 rounded-lg text-amber-900">
+                                <i class="fa-solid fa-id-card-clip text-lg text-amber-600"></i>
+                                <span>ਆਯੁਸ਼ਮਾਨ ਭਾਰਤ ਕਾਰਡ (5 ਲੱਖ ਤੱਕ ਇਲਾਜ)</span>
+                            </li>
+                            <li class="flex items-center gap-3 p-2 bg-slate-100 rounded-lg text-slate-800">
+                                <i class="fa-solid fa-shirt text-lg text-brand-red"></i>
+                                <span>ਕੱਪ, ਟੀ-ਸ਼ਰਟ, ਫਲੈਕਸ & ਕੀ-ਚੇਨ ਪ੍ਰਿੰਟਿੰਗ</span>
+                            </li>
+                            <li class="flex items-center gap-3 p-2 bg-emerald-50 rounded-lg text-emerald-900">
+                                <i class="fa-solid fa-file-invoice-dollar text-lg text-emerald-600"></i>
+                                <span>ITR ਰਿਟਰਨ & GAMCA ਮੈਡੀਕਲ ਅਪਾਇੰਟਮੈਂਟ</span>
+                            </li>
+                        </ul>
+                        <div class="mt-5 text-center">
+                            <button onclick="navigateTo('contact')" class="w-full bg-brand-red hover:bg-red-800 text-white font-bold py-2.5 rounded-lg shadow transition text-sm">
+                                Contact Branch Today
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Service Categories Grid -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="text-center max-w-3xl mx-auto mb-10">
+                    <h2 class="text-2xl sm:text-3xl font-black text-slate-900">Choose Service Category</h2>
+                    <p class="text-slate-600 mt-2">Fast turnaround, accurate documentation, and premium quality printing under one roof.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- Category 1 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-md border border-slate-200 card-hover flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-red-100 text-brand-red flex items-center justify-center text-2xl font-bold mb-4">
+                                <i class="fa-solid fa-landmark"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900">Government Services</h3>
+                            <p class="text-xs font-bold text-brand-red mt-0.5 font-gurmukhi">ਸਰਕਾਰੀ ਸੇਵਾਵਾਂ</p>
+                            <p class="text-slate-600 text-sm mt-3">
+                                Online applications for Passport, Voter ID, Driving License, Pensions, PM Awas Yojana, Shagan Scheme & Caste/Residence Certificates.
+                            </p>
+                        </div>
+                        <button onclick="navigateTo('services')" class="mt-6 text-brand-red font-bold text-sm hover:underline flex items-center gap-1">
+                            Explore All Documentation <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- Category 2 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-md border border-slate-200 card-hover flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl font-bold mb-4">
+                                <i class="fa-solid fa-print"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900">Printing & Custom Gifts</h3>
+                            <p class="text-xs font-bold text-amber-700 mt-0.5 font-gurmukhi">ਕਸਟਮ ਪ੍ਰਿੰਟਿੰਗ & ਗਿਫਟ</p>
+                            <p class="text-slate-600 text-sm mt-3">
+                                Photostat, Color Prints, Flex Printing, Mug/Cup printing, T-Shirts, Photo Frames, Keychains & Heavy Duty Lamination.
+                            </p>
+                        </div>
+                        <button onclick="navigateTo('services')" class="mt-6 text-amber-700 font-bold text-sm hover:underline flex items-center gap-1">
+                            Explore Printing Options <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- Category 3 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-md border border-slate-200 card-hover flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl font-bold mb-4">
+                                <i class="fa-solid fa-money-check-dollar"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900">Tax, Insurance & Banking</h3>
+                            <p class="text-xs font-bold text-emerald-700 mt-0.5 font-gurmukhi">ਟੈਕਸ, ਬੀਮਾ & ਬੈਂਕਿੰਗ</p>
+                            <p class="text-slate-600 text-sm mt-3">
+                                Income Tax Return (ITR) filing, GAMCA appointments, Bike/Car/Bus insurance, Challan payments & Money transfers.
+                            </p>
+                        </div>
+                        <button onclick="navigateTo('services')" class="mt-6 text-emerald-700 font-bold text-sm hover:underline flex items-center gap-1">
+                            Explore Financial Services <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trust Statistics Bar -->
+            <div class="bg-slate-900 text-white py-12 px-4 my-8">
+                <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                    <div class="p-4 border-r border-slate-800 last:border-none">
+                        <div class="text-3xl sm:text-4xl font-black text-amber-400">10+</div>
+                        <div class="text-xs sm:text-sm text-slate-400 font-medium mt-1">Years Serving Nawanshahr</div>
+                    </div>
+                    <div class="p-4 border-r border-slate-800 last:border-none">
+                        <div class="text-3xl sm:text-4xl font-black text-amber-400">15,000+</div>
+                        <div class="text-xs sm:text-sm text-slate-400 font-medium mt-1">Happy Clients Served</div>
+                    </div>
+                    <div class="p-4 border-r border-slate-800 last:border-none">
+                        <div class="text-3xl sm:text-4xl font-black text-amber-400">1</div>
+                        <div class="text-xs sm:text-sm text-slate-400 font-medium mt-1">Key Court Complex Branch</div>
+                    </div>
+                    <div class="p-4">
+                        <div class="text-3xl sm:text-4xl font-black text-amber-400">100%</div>
+                        <div class="text-xs sm:text-sm text-slate-400 font-medium mt-1">Verified Online Applications</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Service Fee / Price Estimator Interactive Tool -->
+            <div class="max-w-4xl mx-auto px-4 py-8">
+                <div class="bg-gradient-to-r from-red-900 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-xl">
+                    <div class="flex items-center gap-3 mb-4">
+                        <i class="fa-solid fa-calculator text-2xl text-amber-400"></i>
+                        <h3 class="text-xl font-bold">Quick Printing Cost Estimator</h3>
+                    </div>
+                    <p class="text-xs text-slate-300 mb-6">Estimate your document photo/printout requirements instantly.</p>
+
+                    <div class="grid sm:grid-cols-3 gap-4 text-slate-800">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-200 mb-1">Service Type</label>
+                            <select id="est-type" class="w-full p-2.5 rounded-lg text-sm bg-white font-medium" onchange="calculateEstimate()">
+                                <option value="10">Black & White Photostat (Rs. 3/pg)</option>
+                                <option value="15">Color Printout (Rs. 15/pg)</option>
+                                <option value="50">Passport Photos Set (Rs. 70)</option>
+                                <option value="350">Custom Mug Printing (Rs. 300)</option>
+                                <option value="450">Custom T-Shirt Printing (Rs. 500)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-200 mb-1">Quantity / Copies</label>
+                            <input id="est-qty" type="number" min="1" value="5" class="w-full p-2.5 rounded-lg text-sm bg-white font-medium" oninput="calculateEstimate()">
+                        </div>
+                     
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SERVICES SECTION ================= -->
+        <section id="page-services" class="page-section">
+            <div class="bg-slate-100 py-10 px-4 sm:px-6">
+                <div class="max-w-7xl mx-auto">
+                    <!-- Title Header -->
+                    <div class="text-center max-w-3xl mx-auto mb-10">
+                        <span class="bg-red-100 text-brand-red text-xs font-extrabold px-3 py-1 rounded-full border border-red-200 uppercase">Comprehensive Offerings</span>
+                        <h1 class="text-3xl sm:text-4xl font-black text-slate-900 mt-2">ਸਾਡੀਆਂ ਸਾਰੀਆਂ ਆਨਲਾਈਨ & ਪ੍ਰਿੰਟਿੰਗ ਸੇਵਾਵਾਂ</h1>
+                        <p class="text-slate-600 text-sm mt-2">All Online Government Forms, Custom Gift Printing, Tax Filing & Digital Services</p>
+                    </div>
+
+                    <!-- Category 1: Government & Documentation -->
+                    <div class="mb-12">
+                        <div class="flex items-center gap-3 border-b-2 border-brand-red pb-3 mb-6">
+                            <div class="w-10 h-10 rounded-lg bg-brand-red text-white flex items-center justify-center font-bold text-lg">
+                                <i class="fa-solid fa-passport"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-xl sm:text-2xl font-black text-slate-900">Government & Digital Documentation</h2>
+                                <p class="text-xs text-brand-red font-bold font-gurmukhi">ਸਰਕਾਰੀ ਅਤੇ ਆਨਲਾਈਨ ਦਸਤਾਵੇਜ਼ ਸੇਵਾਵਾਂ</p>
+                            </div>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-brand-red transition">
+                                <div class="font-bold text-slate-900">ਪਾਸਪੋਰਟ ਆਨਲਾਈਨ (Passport Online)</div>
+                                <p class="text-xs text-slate-500 mt-1">Fresh application, renewal & tatkal form filing support.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-brand-red transition">
+                                <div class="font-bold text-slate-900">ਆਧਾਰ & ਪੈਨ ਕਾਰਡ (Aadhaar & PAN Card)</div>
+                                <p class="text-xs text-slate-500 mt-1">New PAN creation, corrections, Aadhaar downloading & updates.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-brand-red transition">
+                                <div class="font-bold text-slate-900">ਵੋਟਰ ਕਾਰਡ ਆਨਲਾਈਨ (Voter ID Card)</div>
+                                <p class="text-xs text-slate-500 mt-1">New voter registration, address change & PVC printout.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-brand-red transition">
+                                <div class="font-bold text-slate-900">ਡਰਾਈਵਿੰਗ ਲਾਇਸੈਂਸ (Driving License)</div>
+                                <p class="text-xs text-slate-500 mt-1">Learner license, permanent renewal & slot booking.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-brand-red transition">
+                                <div class="font-bold text-slate-900">ਆਯੁਸ਼ਮਾਨ ਭਾਰਤ ਕਾਰਡ (Ayushman Bharat Card)</div>
+                                <p class="text-xs text-slate-500 mt-1">Free health insurance card up to ₹5 Lakh treatment.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-brand-red transition">
+                                <div class="font-bold text-slate-900">ਪੈਨਸ਼ਨ ਆਨਲਾਈਨ (Online Pension Schemes)</div>
+                                <p class="text-xs text-slate-500 mt-1">Old age, widow & disability pension application assistance.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-brand-red transition">
+                                <div class="font-bold text-slate-900">ਪ੍ਰਧਾਨ ਮੰਤਰੀ ਆਵਾਸ ਯੋਜਨਾ (PM Awas Yojana)</div>
+                                <p class="text-xs text-slate-500 mt-1">Government housing scheme applications & status check.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-brand-red transition">
+                                <div class="font-bold text-slate-900">ਸ਼ਗਨ ਸਕੀਮ (Shagan Scheme & Govt Schemes)</div>
+                                <p class="text-xs text-slate-500 mt-1">Financial aid forms for marriages & state welfare initiatives.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-brand-red transition">
+                                <div class="font-bold text-slate-900">ਰਿਹਾਇਸ਼ੀ/ਜਾਤੀ ਸਰਟੀਫਿਕੇਟ (Residence & Caste Cert.)</div>
+                                <p class="text-xs text-slate-500 mt-1">Domicile, OBC, SC/ST, and income certificate submissions.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category 2: Printing & Custom Branding -->
+                    <div class="mb-12">
+                        <div class="flex items-center gap-3 border-b-2 border-amber-600 pb-3 mb-6">
+                            <div class="w-10 h-10 rounded-lg bg-amber-600 text-white flex items-center justify-center font-bold text-lg">
+                                <i class="fa-solid fa-print"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-xl sm:text-2xl font-black text-slate-900">Printing, Photo Studio & Customized Gifts</h2>
+                                <p class="text-xs text-amber-700 font-bold font-gurmukhi">ਪ੍ਰਿੰਟਿੰਗ, ਫੋਟੋਗ੍ਰਾਫੀ ਅਤੇ ਕਸਟਮ ਗਿਫਟ</p>
+                            </div>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-amber-500 transition">
+                                <div class="font-bold text-slate-900">ਫੋਟੋਸਟੇਟ & ਕਲਰ ਪ੍ਰਿੰਟ (Photostat & Color Prints)</div>
+                                <p class="text-xs text-slate-500 mt-1">High speed black & white photocopying and vibrant color prints.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-amber-500 transition">
+                                <div class="font-bold text-slate-900">ਫੋਟੋਗ੍ਰਾਫੀ & ਫੋਟੋ ਤੋਂ ਫੋਟੋ (Photo Studio Services)</div>
+                                <p class="text-xs text-slate-500 mt-1">Passport size photos, photo enlargement & photo duplication.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-amber-500 transition">
+                                <div class="font-bold text-slate-900">ਫੋਟੋ ਫਰੇਮ (Custom Photo Frames)</div>
+                                <p class="text-xs text-slate-500 mt-1">Decorative wooden, glass, and wall frames for memories.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-amber-500 transition">
+                                <div class="font-bold text-slate-900">ਫਲੈਕਸ ਪ੍ਰਿੰਟਿੰਗ (Flex Printing)</div>
+                                <p class="text-xs text-slate-500 mt-1">Large format banners, shop boards, hoardings & event posters.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-amber-500 transition">
+                                <div class="font-bold text-slate-900">ਕੱਪ / ਮਗ ਪ੍ਰਿੰਟਿੰਗ (Cup / Mug Printing)</div>
+                                <p class="text-xs text-slate-500 mt-1">Customized photo mugs for gifts, birthdays & corporate branding.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-amber-500 transition">
+                                <div class="font-bold text-slate-900">ਟੀ-ਸ਼ਰਟ ਪ੍ਰਿੰਟਿੰਗ (T-Shirt Printing)</div>
+                                <p class="text-xs text-slate-500 mt-1">Personalized logo and photo printed t-shirts for groups/events.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-amber-500 transition">
+                                <div class="font-bold text-slate-900">ਕੀ-ਚੇਨ ਪ੍ਰਿੰਟਿੰਗ (Key-Chain Printing)</div>
+                                <p class="text-xs text-slate-500 mt-1">Acrylic & metallic personalized keychains.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-amber-500 transition">
+                                <div class="font-bold text-slate-900">ਲੈਮੀਨੇਸ਼ਨ & ਆਯੁਸ਼ਮਾਨ ਪ੍ਰਿੰਟਿੰਗ (Lamination & PVC Cards)</div>
+                                <p class="text-xs text-slate-500 mt-1">Heavy duty lamination for marksheets, land records & PVC cards.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category 3: Financial, Tax & Foreign Utility -->
+                    <div class="mb-8">
+                        <div class="flex items-center gap-3 border-b-2 border-emerald-600 pb-3 mb-6">
+                            <div class="w-10 h-10 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">
+                                <i class="fa-solid fa-file-invoice-dollar"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-xl sm:text-2xl font-black text-slate-900">Financial, Tax & Cyber Cafe Services</h2>
+                                <p class="text-xs text-emerald-700 font-bold font-gurmukhi">ਇੰਕਮ ਟੈਕਸ, ਬੈਂਕਿੰਗ ਅਤੇ ਹੋਰ ਆਨਲਾਈਨ ਕੰਮ</p>
+                            </div>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-emerald-500 transition">
+                                <div class="font-bold text-slate-900">ਇੰਕਮ ਟੈਕਸ ਰਿਟਰਨ (Income Tax Return - ITR)</div>
+                                <p class="text-xs text-slate-500 mt-1">Professional ITR filing for salaried, business & farmers.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-emerald-500 transition">
+                                <div class="font-bold text-slate-900">GAMCA ਮੈਡੀਕਲ ਅਪਾਇੰਟਮੈਂਟ (GAMCA Appointment)</div>
+                                <p class="text-xs text-slate-500 mt-1">Gulf country medical test slot booking for GCC visas.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-emerald-500 transition">
+                                <div class="font-bold text-slate-900">ਮੋਟਰਸਾਈਕਲ/ਕਾਰ/ਬੱਸ ਇੰਸ਼ੋਰੈਂਸ (Vehicle Insurance)</div>
+                                <p class="text-xs text-slate-500 mt-1">Instant third-party and comprehensive vehicle insurance renewal.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-emerald-500 transition">
+                                <div class="font-bold text-slate-900">ਆਨਲਾਈਨ ਚਲਾਨ ਭਰੋ (Online Challan Payment)</div>
+                                <p class="text-xs text-slate-500 mt-1">Traffic police e-challan payment & court clearance guidance.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-emerald-500 transition">
+                                <div class="font-bold text-slate-900">ਬੈਂਕਿੰਗ ਸੇਵਾਵਾਂ (Banking & Cash Transfer)</div>
+                                <p class="text-xs text-slate-500 mt-1">Aadhaar cash withdrawal, money transfer to any bank account.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-emerald-500 transition">
+                                <div class="font-bold text-slate-900">ਅੰਗਰੇਜ਼ੀ/ਪੰਜਾਬੀ ਟਾਈਪਿੰਗ (English & Punjabi Typing)</div>
+                                <p class="text-xs text-slate-500 mt-1">Legal affidavit typing, applications & project document printouts.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= ABOUT SECTION ================= -->
+        <section id="page-about" class="page-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="grid md:grid-cols-12 gap-8 items-center">
+                    <div class="md:col-span-6 space-y-4">
+                        <span class="bg-amber-100 text-amber-900 text-xs font-bold px-3 py-1 rounded-full uppercase">About Our Firm</span>
+                        <h1 class="text-3xl sm:text-4xl font-black text-slate-900">
+                            Serving Nawanshahr With Trust & Accuracy
+                        </h1>
+                        <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+                            <strong>RANA Printing & Online Works</strong> is a premier service hub in Nawanshahr dedicated to simplifying complex online government applications, document processing, legal documentation typing, and high-quality commercial printing.
+                        </p>
+                        <p class="text-slate-600 leading-relaxed text-sm font-gurmukhi bg-red-50 p-4 rounded-xl border-l-4 border-brand-red">
+                            ਅਸੀਂ ਗਾਹਕਾਂ ਨੂੰ ਪਾਸਪੋਰਟ ਆਨਲਾਈਨ ਫਾਰਮ, ਆਯੁਸ਼ਮਾਨ ਕਾਰਡ, ਆਧਾਰ/ਪੈਨ ਕਾਰਡ ਸੇਵਾਵਾਂ, ਇੰਕਮ ਟੈਕਸ ਰਿਟਰਨ, GAMCA ਅਪਾਇੰਟਮੈਂਟਾਂ ਅਤੇ ਹਰ ਤਰ੍ਹਾਂ ਦੀ ਫਲੈਕਸ ਵਾ ਕਸਟਮ ਗਿਫਟ ਪ੍ਰਿੰਟਿੰਗ ਲਈ ਸਭ ਤੋਂ ਵਧੀਆ ਅਤੇ ਭਰੋਸੇਮੰਦ ਸੁਵਿਧਾ ਪ੍ਰਦਾਨ ਕਰਦੇ ਹਾਂ।
+                        </p>
+
+                        <div class="pt-4 grid grid-cols-2 gap-4">
+                            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                                <div class="text-brand-red font-bold text-lg"><i class="fa-solid fa-check-circle mr-1"></i> Branch</div>
+                                <p class="text-xs text-slate-500 mt-1">Conveniently located near SD Complex Asron and DC Complex Kacheria.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                                <div class="text-amber-600 font-bold text-lg"><i class="fa-solid fa-bolt mr-1"></i> Fast Turnaround</div>
+                                <p class="text-xs text-slate-500 mt-1">Instant photo printing, form submission & same-day pickup options.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-6">
+                        <div class="bg-gradient-to-br from-brand-red to-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-xl relative">
+                            <div class="absolute -top-4 -right-4 bg-amber-400 text-slate-950 px-4 py-1.5 rounded-full text-xs font-black shadow">
+                                Official Business Details
+                            </div>
+                            <h3 class="text-2xl font-bold mb-6 text-amber-300">Office Branch Locations</h3>
+
+                            <div class="space-y-6 text-sm">
+                                <div>
+                                    <div class="flex items-start gap-3">
+                                        <i class="fa-solid fa-building text-amber-400 mt-1 text-lg"></i>
+                                        <div>
+                                            <div class="font-bold text-base text-white">Branch : DC Complex Kacheria</div>
+                                            <p class="text-slate-200 mt-1">Chamber No-05 & 06, D.C. Complex, Kacheria (near Chandigarh Road), Nawanshahr</p>
+                                            <p class="text-amber-300 text-xs mt-1">Phone: 98886-80022</p>
+                                            <p class="text-slate-300 text-xs">Email: ranaprinting47@gmail.com</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= CONTACT SECTION ================= -->
+        <section id="page-contact" class="page-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <span class="bg-amber-100 text-amber-900 text-xs font-bold px-3 py-1 rounded-full uppercase">Get In Touch</span>
+                    <h1 class="text-3xl sm:text-4xl font-black text-slate-900 mt-2">Contact RANA Printing & Online Works</h1>
+                    <p class="text-slate-600 text-sm mt-1">Visit our chambers in Nawanshahr or message us for instant assistance.</p>
+                </div>
+
+                <div class="grid lg:grid-cols-12 gap-8">
+                    <!-- Contact Cards -->
+                    <div class="lg:col-span-5 space-y-4">
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-red-100 text-brand-red flex items-center justify-center text-xl font-bold flex-shrink-0">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Phone Numbers</h4>
+                                <p class="text-xs text-slate-500 mb-2">Call us for quick updates on applications & printing orders.</p>
+                                <div class="space-y-1 font-semibold text-sm text-brand-red">
+                                    <div><a href="tel:9056080540" class="hover:underline"><i class="fa-solid fa-phone-flip text-xs mr-1"></i> 62396-24821</a></div>
+                                    <div><a href="tel:9888680022" class="hover:underline"><i class="fa-solid fa-phone-flip text-xs mr-1"></i> 98886-80022</a></div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl font-bold flex-shrink-0">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Official Emails</h4>
+                                <p class="text-xs text-slate-500 mb-2">Send your photos, documents, or queries directly.</p>
+                                <div class="space-y-1 font-semibold text-sm text-slate-800">
+                                   
+                                    <p><a href="mailto:ranaprinting47@gmail.com" class="hover:text-brand-red">ranaprinting47@gmail.com</a></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl font-bold flex-shrink-0">
+                                <i class="fa-solid fa-map-location-dot"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Visit Our Chambers</h4>
+                               
+                                <p class="text-xs text-slate-600 mt-1">
+                                    <strong>Chamber 05 & 06:</strong> DC Complex, Kacheria, Nawanshahr
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Form -->
+                    <div class="lg:col-span-7 bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-md">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-2">Send Direct Online Message</h3>
+                        <p class="text-xs text-slate-500 mb-6">Fill out the form below and we will contact you shortly.</p>
+
+                        <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                           
+                        </form>
+
+                        <div id="form-success-msg" class="hidden mt-4 p-4 bg-emerald-100 text-emerald-800 rounded-xl text-sm font-semibold text-center border border-emerald-300">
+                            <i class="fa-solid fa-circle-check text-lg mr-1"></i> Thank you! Your inquiry has been submitted. We will call you back shortly.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER SECTION -->
+    <footer class="bg-slate-950 text-slate-300 border-t-4 border-amber-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Col 1 -->
+                <div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-2xl font-black text-white">RANA</span>
+                        <span class="text-xs bg-amber-500 text-slate-950 font-extrabold px-2 py-0.5 rounded">PRINTING</span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed font-gurmukhi">
+                        ਨਵਾਸ਼ਹਿਰ ਵਿਚ ਤੁਹਾਡੇ ਸਮੁੱਚੇ ਆਨਲਾਈਨ ਸਰਕਾਰੀ ਕੰਮਾਂ, ਪਾਸਪੋਰਟ, ਆਯੁਸ਼ਮਾਨ ਭਾਰਤ ਕਾਰਡ ਅਤੇ ਪ੍ਰਿੰਟਿੰਗ ਸੇਵਾਵਾਂ ਲਈ ਭਰੋਸੇਯੋਗ ਨਾਮ।
+                    </p>
+                </div>
+
+                <!-- Col 2 -->
+                <div>
+                    <h4 class="text-white font-bold mb-3 text-sm border-b border-slate-800 pb-1">Quick Links</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><button onclick="navigateTo('home')" class="hover:text-amber-400">Home Page</button></li>
+                        <li><button onclick="navigateTo('services')" class="hover:text-amber-400">Services & Pricing</button></li>
+                        <li><button onclick="navigateTo('about')" class="hover:text-amber-400">Branch Details</button></li>
+                        <li><button onclick="navigateTo('contact')" class="hover:text-amber-400">Contact Us</button></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3 -->
+                <div>
+                    <h4 class="text-white font-bold mb-3 text-sm border-b border-slate-800 pb-1">Branch Locations</h4>
+                    
+                    <p class="text-xs text-slate-400">
+                        <strong>Chamber No-05 & 06:</strong> D.C. Complex, Kacheria, Nawanshahr
+                    </p>
+                </div>
+
+                <!-- Col 4 -->
+                <div>
+                    <h4 class="text-white font-bold mb-3 text-sm border-b border-slate-800 pb-1">Direct Call</h4>
+                    <div class="space-y-2 text-xs font-mono text-amber-400">
+                        <p><i class="fa-solid fa-phone mr-1"></i> 62396-24821</p>
+                        <p><i class="fa-solid fa-phone mr-1"></i> 98886-80022</p>
+                       
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 mt-8 pt-6 text-center text-xs text-slate-500">
+                &copy; <span id="year-span"></span> RANA Printing & Online Works. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- QUICK INQUIRY MODAL -->
+    <div id="inquiry-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative border-2 border-brand-red">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-800 text-xl font-bold">&times;</button>
+            
+            <div class="flex items-center gap-2 text-brand-red font-bold text-lg mb-1">
+                <i class="fa-solid fa-bolt"></i> Quick Inquiry Callback
+            </div>
+            <p class="text-xs text-slate-500 mb-4">Enter your number and we will call you back within 15 minutes.</p>
+
+            <form onsubmit="handleModalSubmit(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Your Name</label>
+                    <input type="text" required placeholder="Name" class="w-full p-2.5 rounded-lg border border-slate-300 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Phone Number</label>
+                    <input type="tel" required placeholder="Mobile Number" class="w-full p-2.5 rounded-lg border border-slate-300 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Service Required</label>
+                    <input type="text" placeholder="e.g. Passport, Ayushman Card, Mug Print" class="w-full p-2.5 rounded-lg border border-slate-300 text-sm">
+                </div>
+                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold py-2.5 rounded-lg text-sm shadow transition">
+                    Request Callback Now
+                </button>
+            </form>
+            <div id="modal-success" class="hidden mt-3 p-2 bg-emerald-100 text-emerald-800 text-xs text-center rounded font-semibold">
+                Callback request received!
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Set dynamic copyright year
+        document.getElementById('year-span').innerText = new Date().getFullYear();
+
+        // Multi-page Tab Switching Logic
+        function navigateTo(pageId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(sec => sec.classList.remove('active'));
+
+            // Show selected section
+            const target = document.getElementById('page-' + pageId);
+            if (target) {
+                target.classList.add('active');
+            }
+
+            // Update navbar button styling
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => {
+                btn.classList.remove('text-brand-red', 'bg-red-50');
+                btn.classList.add('text-slate-700');
+            });
+
+            const activeNav = document.getElementById('nav-' + pageId);
+            if (activeNav) {
+                activeNav.classList.add('text-brand-red', 'bg-red-50');
+                activeNav.classList.remove('text-slate-700');
+            }
+
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Quick Price Estimator Logic
+        function calculateEstimate() {
+            const unitPrice = parseFloat(document.getElementById('est-type').value) || 0;
+            const qty = parseInt(document.getElementById('est-qty').value) || 1;
+            const total = (unitPrice * Math.max(1, qty)).toFixed(2);
+            document.getElementById('est-total').innerText = '₹ ' + total;
+        }
+
+        // Modal Logic
+        function openModal() {
+            document.getElementById('inquiry-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('inquiry-modal').classList.add('hidden');
+            document.getElementById('modal-success').classList.add('hidden');
+        }
+
+        function handleModalSubmit(event) {
+            event.preventDefault();
+            document.getElementById('modal-success').classList.remove('hidden');
+            setTimeout(() => {
+                closeModal();
+            }, 1800);
+        }
+
+        // Contact Form Submission Handler
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const msg = document.getElementById('form-success-msg');
+            msg.classList.remove('hidden');
+            event.target.reset();
+            setTimeout(() => {
+                msg.classList.add('hidden');
+            }, 4000);
+        }
+
+        // Initialize estimator on load
+        window.onload = function() {
+            calculateEstimate();
+        };
+    </script>
+</body>
+</html>
